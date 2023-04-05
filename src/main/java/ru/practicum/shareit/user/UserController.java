@@ -34,24 +34,24 @@ public class UserController {
 
     @GetMapping("/{id}")
     public UserDto getUser(@PathVariable long id) {
-        logRequestMethod(RequestMethod.GET, "/" + id);
+        logRequestMethod(RequestMethod.GET, String.format("/%s", id));
         return userService.getUser(id);
     }
 
     @PatchMapping("/{id}")
     public UserDto updateUser(@RequestBody UserDto userDto,
                               @PathVariable long id) {
-        logRequestMethod(RequestMethod.PATCH, "/" + id);
+        logRequestMethod(RequestMethod.PATCH, String.format("/%s", id));
         return userService.updateUser(id, userDto);
     }
 
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable long id) {
-        logRequestMethod(RequestMethod.DELETE, "/" + id);
+        logRequestMethod(RequestMethod.DELETE, String.format("/%s", id));
         userService.deleteUser(id);
     }
 
     private void logRequestMethod(RequestMethod requestMethod, String path) {
-        log.info("Получен запрос " + requestMethod + " по адресу: /users" + path);
+        log.info(String.format("Получен запрос %s по адресу: /users%s", requestMethod, path));
     }
 }

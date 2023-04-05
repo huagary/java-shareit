@@ -22,7 +22,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto addUser(UserDto userDto) {
-        if (emailExist(userDto).isPresent()) throw new AlreadyExistException("Email already in use");
+        if (emailExist(userDto).isPresent())
+            throw new AlreadyExistException(
+                    String.format("Email %s already in use", userDto.getEmail())
+            );
         return userDao.addUser(userDto);
     }
 
@@ -34,7 +37,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto updateUser(long id, UserDto userDto) {
         if (emailExist(userDto).isPresent() && emailExist(userDto).get().getId() != id)
-            throw new AlreadyExistException("Email already in use");
+            throw new AlreadyExistException(
+                    String.format("Email %s already in use", userDto.getEmail())
+            );
         return userDao.updateUser(id, userDto);
     }
 

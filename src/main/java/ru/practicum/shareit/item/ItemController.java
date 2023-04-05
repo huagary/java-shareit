@@ -24,7 +24,7 @@ public class ItemController {
     @PostMapping
     public ItemDto addItem(@RequestHeader(userIdHeader) long ownerId,
                            @Valid @RequestBody ItemDto itemDto) {
-        logRequestMethod(RequestMethod.POST, " + header '" + userIdHeader + "': " + ownerId);
+        logRequestMethod(RequestMethod.POST, String.format(" + header '%s': %s", userIdHeader, ownerId));
         return itemService.addItem(ownerId, itemDto);
     }
 
@@ -32,30 +32,30 @@ public class ItemController {
     public ItemDto updateItem(@RequestHeader(userIdHeader) long ownerId,
                               @PathVariable long id,
                               @RequestBody ItemDto itemDto) {
-        logRequestMethod(RequestMethod.PATCH, "/" + id + " + header '" + userIdHeader + "': " + ownerId);
+        logRequestMethod(RequestMethod.PATCH, String.format("/%s + header '%s': %s", id, userIdHeader, ownerId));
         return itemService.updateItem(ownerId, id, itemDto);
     }
 
     @GetMapping("/{id}")
     public ItemDto getItem(@PathVariable long id) {
-        logRequestMethod(RequestMethod.GET, "/" + id);
+        logRequestMethod(RequestMethod.GET, String.format("/%s", id));
         return itemService.getItem(id);
     }
 
     @GetMapping
     public List<ItemDto> getUserItems(@RequestHeader(userIdHeader) long userId) {
-        logRequestMethod(RequestMethod.GET, " + header '" + userIdHeader + "': " + userId);
+        logRequestMethod(RequestMethod.GET, String.format(" + header '%s': %s", userIdHeader, userId));
         return itemService.getUserItems(userId);
     }
 
     @GetMapping("/search")
     public List<ItemDto> search(@RequestParam String text) {
-        logRequestMethod(RequestMethod.GET, "/search?text=" + text);
+        logRequestMethod(RequestMethod.GET, String.format("/search?text=%s", text));
         System.out.println(text);
         return itemService.search(text);
     }
 
     private void logRequestMethod(RequestMethod requestMethod, String path) {
-        log.info("Получен запрос " + requestMethod + " по адресу: /items" + path);
+        log.info(String.format("Получен запрос %s по адресу: /users%s", requestMethod, path));
     }
 }
